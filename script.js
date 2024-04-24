@@ -219,7 +219,7 @@ function platillaProducto(producto) {
                                 <button id="btn-restar"  class="btn-sumar-restar" onclick="Restar(${producto.id})"> <p class="btn-signo">-</p></button>
                                 <p id="cantidad-item" class="cantidad"> ${producto.cantidad} </p> 
                                 <button id="btn-sumar" onclick="Sumar(${producto.id})" class="btn-sumar-restar"> <p class="btn-signo">+</p></button>
-                                <button id="btn-eliminar" onclick="EliminarProducto(${producto.id})" class="btn-sumar-restar btn-eliminar"> <p class="btn-signo"><img src="/recursos/img/remove-logo.png" alt="" width="30" height="24"
+                                <button id="btn-eliminar" onclick="EliminarProducto(${producto.id})" class="btn-sumar-restar btn-eliminar"> <p class="btn-signo"><img src="recursos/img/remove-logo.png" alt="" width="30" height="24"
                                 class="d-inline-block align-text-top"></button>
                             </div>
                         </div>
