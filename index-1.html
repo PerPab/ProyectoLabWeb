@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="SHORTCUT ICON" HREF="/recursos/img/shop-ico.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="./estilos-1.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Tienda Online</title>
+</head>
+
+<body class="scrollable-content">
+    <div id="contenedor-principal" class="container-fluid m-0 p-0">
+        <header>
+            <!-- aca se inserta el navbar de bootstrap -->
+            <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark ">
+                <div class="container-fluid">
+                    <a class="navbar-brand d-flex" href="#">
+                        <img src="/recursos/img/shop-logo.png" alt="" width="30" height="24"
+                            class="d-inline-block align-text-top">
+                        <p class="tienda-texto p-0 m-0">Tienda Online</p>
+                    </a>
+
+                    <!-- Botón agregado al final del navbar btn-outline-success-->
+                    <ul class="m-0 p-0">
+                        <li class="nav-item me-2">
+                            <a class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                onclick="RenderizarCarrito()">
+                                <img class="p-0 m-0 " src="recursos/img/carrito.png" alt="Carrito de compras"
+                                    style="width: 45px; height: 45px;">
+                                <span id="icono-cantidad"
+                                    class=" top-50 translate-middle badge rounded-pill bg-danger hide">
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </header>
+
+
+        <section id=" contenedor-productos" class="contenedor-productos">
+            <!--  aca se van a renderizar los items de la tienda -->
+            <div id="lista-elementos"
+                class="container-fluid d-flex flex-row flex-wrap justify-content-center align-items-center">
+            </div>
+        </section>
+
+        <section id="contenedor-modal">
+            <!--  aca se van a renderizar el modal con el detalle de los productos -->
+            <div>
+                <div class="modal modal-carrito fade" id="staticBackdrop" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-carrito">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                    <p id="title-producto"></p>
+                                    <!-- se inserta dinamicamente la info por medio de CrearModal()-->
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div id="modal-productos" class="modal-body carrito-body">
+                                <div
+                                    class="container-fluid d-flex align-items-center justify-content-center body-modal">
+
+                                    <div id="image-modal">
+                                    </div>
+
+                                    <div id="description-modal">
+                                    </div>
+
+                                    <div id="precio-modal"
+                                        class="container-fluid d-flex align-items-center justify-content-start">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div id="btn-modal" class="modal-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contenedor-canvas">
+            <!-- Offcanvas para el carrito -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel">Mi Carrito</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div id="btn-contenedor-carro"
+                    class="d-flex align-items-center justify-content-around m-3 contenedor-boton-carrito hide">
+                    <button id="btn-comprar" onclick="ComprarCarrito()" class="btn btn-primary">Comprar
+                        carrito</button>
+                    <div class="container-fluid d-flex align-items-center justify-content-start contenedor-total-btn">
+                        <p class="total-texto pa pe">Total:
+                        <p class="pa pe total-valor precio-item" id="total">
+                        </p>
+                        </p>
+                    </div>
+                </div>
+                <div id="canvas-body" class="offcanvas-body">
+                    <!-- Aca se renderiza los productos en el carro-->
+                    <div id="lista-productos-carrito" class="lista-productos">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="modal-compras">
+            <div class="modal" id="modal-comp">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title modal-compra-titulo">Desea finalizar la compra?</h5>
+                        </div>
+                        <div class="modal-body">
+                            <img id="imagen-compra" class="compra-icono" src="./recursos/img/shopping_icon.png">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" onclick="ComprarCarrito()" data-bs-dismiss="modal"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container-fluid contenedor-footer">
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+
+                    <p><a class="github-link" href="https://github.com/PerPab" target="_blank">Pablo Percara</a> | <a
+                            class="github-link" href="https://github.com/gastoncontrerasl" target="_blank">Gastón
+                            Contreras</a></p>
+                </ul>
+                <p class="text-center text-body-secondary">&copy; 2024 Tienda Online</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts --------------------------------------------------------------------------->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./script-1.js"></script>
+
+</body>
+
+</html>
