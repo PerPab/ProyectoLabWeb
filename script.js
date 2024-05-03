@@ -164,7 +164,6 @@ function EliminarProducto(id) {
             confirmButtonText: "Ok"
 
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 let indice = listaProductosCarrito.indexOf(listaProductosCarrito.find((prod) => prod.id == id))
                 listaProductosCarrito.splice(indice, 1);
@@ -315,7 +314,8 @@ function ComprarCarrito() {
         Swal.fire({
             title: "Desea finalizar la compra?",
             showCancelButton: true,
-            confirmButtonText: "Aceptar"
+            confirmButtonText: "Aceptar",
+            timer: 50000
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -326,6 +326,31 @@ function ComprarCarrito() {
                 ActualizarIconoCarrito();
                 OcultarBotonComprar();
                 Swal.fire("Gracias por comprar!", "", "success");
+            }
+        });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
+function CancelarCompra() {
+    try {
+        Swal.fire({
+            title: "Desea cancelar y vaciar el carrito?",
+            showCancelButton: true,
+            confirmButtonText: "Aceptar",
+            timer: 50000
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                listaProductosCarrito = [];
+                LimpiarCarrito();
+                SincronizarLocalStorage();
+                RenderizarCarrito();
+                ActualizarIconoCarrito();
+                OcultarBotonComprar();
+                Swal.fire("Carrito Eliminado...", "", "success");
             }
         });
     } catch (err) {
@@ -462,6 +487,7 @@ function iniciarApp() {
 }
 
 window.addEventListener('onload', iniciarApp());
+
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('carrito') != null) {
         listaProductosCarrito = JSON.parse(localStorage.getItem('carrito'));
